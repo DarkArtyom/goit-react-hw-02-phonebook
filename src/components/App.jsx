@@ -16,7 +16,9 @@ export class App extends Component {
   formSubmit = ({ name, number }) => {
     const { contacts } = this.state;
 
-    const findName = contacts.find(contact => contact.name === name);
+    const findName = contacts.find(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
     if (findName) {
       alert(`${name} is already in contacts`);
     } else {
@@ -43,9 +45,9 @@ export class App extends Component {
 
   getVisibleContacts = () => {
     const { filter, contacts } = this.state;
-    const normalazedFilter = filter.toLocaleLowerCase();
+    const normalazedFilter = filter.toLowerCase();
     return contacts.filter(contact =>
-      contact.name.toLocaleLowerCase().includes(normalazedFilter)
+      contact.name.toLowerCase().includes(normalazedFilter)
     );
   };
 
@@ -59,11 +61,15 @@ export class App extends Component {
         <Form onSubmit={this.formSubmit} />
 
         <h2>Contacts</h2>
-        <Filter value={filter} onChange={this.filterChange} />
-        <ContactsList
-          visibleContacts={visiblePhoneBook}
-          onDeleteContact={this.deleteContact}
-        ></ContactsList>
+        {this.state.contacts.length > 0 && (
+          <Filter value={filter} onChange={this.filterChange} />
+        )}
+        {this.state.contacts.length > 0 && (
+          <ContactsList
+            visibleContacts={visiblePhoneBook}
+            onDeleteContact={this.deleteContact}
+          ></ContactsList>
+        )}
       </Container>
     );
   }

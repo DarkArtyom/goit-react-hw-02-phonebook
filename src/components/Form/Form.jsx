@@ -1,11 +1,13 @@
 import { Component } from 'react';
 import { Forma, Label, Input, ButtonSubmit } from './Form.styled';
-
+import { nanoid } from 'nanoid';
 export class Form extends Component {
   state = {
     name: '',
     number: '',
   };
+
+  loginInputId = nanoid();
 
   handleInput = evt => {
     const { name, value } = evt.target;
